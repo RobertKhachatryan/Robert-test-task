@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useDispatch } from "react-redux";
 import { createPost, deletePost } from "../app/slices/postSlice";
-
+import { Input } from "@mui/material";
 const style = {
   position: "absolute",
   top: "50%",
@@ -44,6 +44,10 @@ export default function CreateCardModal({ open, handleClose }) {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
+        <>
+          <Input placeholder="Title" />
+          <Input placeholder="Body" />
+        </>
         <div
           style={{
             width: "100%",

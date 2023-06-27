@@ -14,7 +14,6 @@ export const TodosPage = () => {
 
   const getTodos = async () => {
     const todos = JSON.parse(localStorage.getItem("todos"));
-    // console.log(todos, "todooooooooooooo");
     if (!todos || !todos.length) {
       const data = await dispatch(
         fetchTodos({
@@ -37,17 +36,28 @@ export const TodosPage = () => {
     opacity: 0.8;
     border-radius: 10px;
   `;
+
+  const sortedTodos = [...todosData].sort((a, b) => {
+    if (a.completed && !b.completed) {
+      return -1;
+    } else if (!a.completed && b.completed) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+
   return (
     <>
       <Header />
       <Box padding={"0px 100px"}>
         <PageTitle title="Todos" />
         <Stack spacing={1}>
-          {todosData?.map((task) => {
+          {sortedTodos?.map((task) => {
             const status = task?.completed ? "Completed" : "Uncompleted";
             return (
               <StyledListItem
-                key={task?.id * Math.random()}
+                key={task?.id}
                 style={{ display: "flex", justifyContent: "space-between" }}
               >
                 <Typography variant="h6">{task?.title}</Typography>

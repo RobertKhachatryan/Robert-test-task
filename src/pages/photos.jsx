@@ -38,7 +38,7 @@ export const PhotosPage = () => {
   return (
     <>
       <Header />
-      <PageTitle title="Photos" />
+      <PageTitle title="Albums" />
       <Box padding={"0px 100px"}>
         <Stack spacing={1}>
           {albumsData?.map((album) => {

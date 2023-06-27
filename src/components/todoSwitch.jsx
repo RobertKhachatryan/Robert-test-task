@@ -9,5 +9,5 @@ export const TodoSwitch = ({ checked }) => {
     // setChecked(!checked);
   };
 
-  return <Switch checked={checked} onChange={handleChange} color="primary" />;
+  return <Switch checked={checked} onChange={handleChange} color="secondary" />;
 };
