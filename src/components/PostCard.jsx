@@ -24,13 +24,20 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
 import styled from "styled-components";
 
-export const PostCard = ({ title, body, id, handleOpen }) => {
+export const PostCard = ({
+  title,
+  body,
+  id,
+  handleOpen,
+  setCommentVisible,
+  commentVisible,
+}) => {
   // states
   const [inputToggle, setInputTogle] = useState(false);
   const [inputValue, setInputValue] = useState("");
   //   const [modalIsOpen, setModalIsOpen] = useState(false);
   const comments = useSelector((state) => state.comments.getCommentsById.data);
-  console.log(comments);
+
   const dispatch = useDispatch();
 
   const handleEdit = () => {
@@ -38,7 +45,12 @@ export const PostCard = ({ title, body, id, handleOpen }) => {
   };
 
   const getComments = () => {
-    dispatch(getCommentsById({ id }));
+    setCommentVisible(!commentVisible);
+    dispatch(
+      getCommentsById({
+        id,
+      })
+    );
     console.log(id);
   };
 
@@ -111,6 +123,7 @@ export const PostCard = ({ title, body, id, handleOpen }) => {
                 color="primary"
               />
             </Box>
+
             <Box>
               <IconButton
                 style={{ fontSize: "35px" }}

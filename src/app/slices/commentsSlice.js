@@ -11,8 +11,11 @@ const initialState = {
 
 export const getCommentsById = createAsyncThunk(
   "getCommentsAction",
-  async ({ id }) => {
+  async ({ id, onSuccess }) => {
     const { data } = await axios.get(`/comments?postId=${id}`);
+    if (onSuccess) {
+      onSuccess();
+    }
     return data;
   }
 );

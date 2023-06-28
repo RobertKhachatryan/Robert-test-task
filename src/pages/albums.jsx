@@ -23,10 +23,11 @@ import ModeCommentIcon from "@mui/icons-material/ModeComment";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { useNavigate } from "react-router";
 
 export const AlbumsPage = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [postId, setPostId] = useState();
 
@@ -71,7 +72,12 @@ export const AlbumsPage = () => {
         <Stack spacing={1}>
           {albumsData?.map((album) => {
             return (
-              <StyledListItem key={album?.id}>
+              <StyledListItem
+                onClick={() => {
+                  navigate(`/photos/${album?.id}`);
+                }}
+                key={album?.id}
+              >
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <Typography>Name: </Typography>
                   <Typography variant="h6">{album?.title}</Typography>

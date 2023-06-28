@@ -3,19 +3,23 @@ import { Header } from "../layout/header";
 import { PageTitle } from "../components/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../app/slices/postSlice";
-import { Box, Button, Grid, IconButton, Pagination } from "@mui/material";
+import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
 import { PostCard } from "../components/PostCard";
 import { DeleteModal } from "../components/DeleteModal";
 import CreateCardModal from "../components/CreateCardModal";
 import AddIcon from "@mui/icons-material/Add";
+import { CustomPagination } from "../components/CustomPagination";
 
 export const PostsPage = () => {
   const dispatch = useDispatch();
   const postsData = useSelector((state) => state.posts.getPosts.data);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openCreateModal, setOpenCreateModal] = useState(false);
-  const [postId, setPostId] = useState();
+  const [commentVisible, setCommentVisible] = useState(false);
 
+  const comments = useSelector((state) => state.comments.getCommentsById.data);
+  const [postId, setPostId] = useState();
+  console.log(comments);
   useEffect(() => {
     const posts = JSON.parse(localStorage.getItem("posts"));
     if (!posts || !posts.length) {
@@ -56,8 +60,10 @@ export const PostsPage = () => {
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
-        {postsData?.map((item, index) => (
+        {postsData?.map((item) => (
           <PostCard
+            setCommentVisible={setCommentVisible}
+            commentVisible={commentVisible}
             id={item.id}
             key={item.id * Math.random()}
             title={item.title}
@@ -68,6 +74,17 @@ export const PostsPage = () => {
             }}
           />
         ))}
+        {commentVisible &&
+          comments?.map((comment) => {
+            console.log(comment);
+            return (
+              <Box key={comment.id}>
+                <Typography>{comment?.name}</Typography>
+                <Typography>{comment?.email}</Typography>
+                <Typography>{comment?.body}</Typography>
+              </Box>
+            );
+          })}
         <DeleteModal
           open={openDeleteModal}
           handleClose={() => setOpenDeleteModal(false)}
@@ -77,19 +94,7 @@ export const PostsPage = () => {
           open={openCreateModal}
           handleClose={() => setOpenCreateModal(false)}
         />
-        <Box
-          width={"100%"}
-          display={"flex"}
-          alignItems={"center"}
-          marginTop={"30px"}
-          justifyContent={"space-between"}
-        >
-          <Pagination count={10} variant="outlined" shape="rounded" />
-          <Box>
-            <Button>В избранное</Button>
-            <Button>Удалить</Button>
-          </Box>
-        </Box>
+        <CustomPagination page="posts" />
       </Grid>
     </>
   );
