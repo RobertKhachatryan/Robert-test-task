@@ -46,6 +46,11 @@ export const AlbumsPage = () => {
     justify-content: space-between !important;
     background-color: #bfdfff;
     border-radius: 10px;
+    cursor: pointer;
+    :hover {
+      background-color: #84c1ff;
+      transition: 0.5s;
+    }
   `;
   return (
     <>
@@ -56,7 +61,10 @@ export const AlbumsPage = () => {
           {albumsData?.map((album) => {
             return (
               <StyledListItem key={album?.id}>
-                <Typography variant="h6">{album?.title}</Typography>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <p>Name: </p>
+                  <Typography variant="h6">{album?.title}</Typography>
+                </div>
                 <div>
                   <IconButton
                     component={ModeEditOutlinedIcon}

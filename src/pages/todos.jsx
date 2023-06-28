@@ -46,6 +46,11 @@ export const TodosPage = () => {
     justify-content: space-between !important;
     background-color: #bfdfff;
     border-radius: 10px;
+    cursor: pointer;
+    :hover {
+      background-color: #84c1ff;
+      transition: 0.5s;
+    }
   `;
 
   const sortedTodos = [...todosData].sort((a, b) => {

@@ -72,12 +72,14 @@ export const PostsPage = () => {
           open={openCreateModal}
           handleClose={() => setOpenCreateModal(false)}
         />
-        <Pagination
-          count={10}
-          variant="outlined"
-          shape="rounded"
-          style={{ marginTop: "30px" }}
-        />
+        <div style={{ width: "100%" }}>
+          <Pagination
+            count={10}
+            variant="outlined"
+            shape="rounded"
+            style={{ marginTop: "30px" }}
+          />
+        </div>
       </Grid>
     </>
   );

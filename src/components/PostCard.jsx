@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Card,
   CardActions,
@@ -21,6 +22,7 @@ import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
+import styled from "styled-components";
 
 export const PostCard = ({ title, body, id, handleOpen }) => {
   // states
@@ -56,55 +58,73 @@ export const PostCard = ({ title, body, id, handleOpen }) => {
     );
   };
 
+  const StyledCard = styled(Card)`
+    width: 300px !important;
+    .MuiCardContent-root {
+      padding: 5px 15px;
+    }
+  `;
+
   return (
     <>
-      <Card sx={{ width: 300, marginTop: 5 }}>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {body}
-          </Typography>
-        </CardContent>
-        <CardActions
+      <StyledCard>
+        <CardContent
           style={{
             display: "flex",
+            flexDirection: "column",
             justifyContent: "space-between",
+            height: "100%",
           }}
         >
-          <div>
-            <IconButton
-              component={ModeEditOutlinedIcon}
-              color="primary"
-              onClick={handleEdit}
-              style={{ fontSize: "35px" }}
-            />
-            <IconButton
-              onClick={() => getComments()}
-              style={{ fontSize: "35px" }}
-              component={ModeCommentOutlinedIcon}
-              color="primary"
-            />
+          <Box>
+            {" "}
+            <Typography gutterBottom variant="h5" component="div">
+              {title}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {body}
+            </Typography>
+          </Box>
+          <CardActions
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <Box>
+              <IconButton
+                component={ModeEditOutlinedIcon}
+                color="primary"
+                onClick={handleEdit}
+                style={{ fontSize: "35px" }}
+              />
+              <IconButton
+                onClick={() => getComments()}
+                style={{ fontSize: "35px" }}
+                component={ModeCommentOutlinedIcon}
+                color="primary"
+              />
 
-            <IconButton
-              style={{ fontSize: "35px" }}
-              component={FavoriteBorderOutlinedIcon}
-              color="primary"
-            />
-          </div>
-          <div>
-            <IconButton
-              style={{ fontSize: "35px" }}
-              component={DeleteOutlineOutlinedIcon}
-              color="error"
-              onClick={() => {
-                //   handleDelete();
-                handleOpen(true);
-              }}
-            />
-          </div>
-        </CardActions>
+              <IconButton
+                style={{ fontSize: "35px" }}
+                component={FavoriteBorderOutlinedIcon}
+                color="primary"
+              />
+            </Box>
+            <Box>
+              <IconButton
+                style={{ fontSize: "35px" }}
+                component={DeleteOutlineOutlinedIcon}
+                color="error"
+                onClick={() => {
+                  //   handleDelete();
+                  handleOpen(true);
+                }}
+              />
+            </Box>
+          </CardActions>
+        </CardContent>
+
         {inputToggle && (
           <>
             <input
@@ -115,7 +135,7 @@ export const PostCard = ({ title, body, id, handleOpen }) => {
             <button onClick={handleSave}>Save</button>
           </>
         )}
-      </Card>
+      </StyledCard>
     </>
   );
 };
