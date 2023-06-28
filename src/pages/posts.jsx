@@ -3,10 +3,11 @@ import { Header } from "../layout/header";
 import { PageTitle } from "../components/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../app/slices/postSlice";
-import { Button, Grid, Pagination } from "@mui/material";
+import { Button, Grid, IconButton, Pagination } from "@mui/material";
 import { PostCard } from "../components/PostCard";
 import CustomModal from "../components/modal";
 import CreateCardModal from "../components/CreateCardModal";
+import AddIcon from "@mui/icons-material/Add";
 
 export const PostsPage = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,17 @@ export const PostsPage = () => {
     <>
       <Header />
       <PageTitle title="Posts" />
-      <Button onClick={() => setOpenCreateModal(true)}>+</Button>
+      <Grid padding={"0px 100px"}>
+        <IconButton
+          component={AddIcon}
+          onClick={() => setOpenCreateModal(true)}
+          style={{ fontSize: "50px" }}
+          color="primary"
+        >
+          +
+        </IconButton>
+      </Grid>
+
       <Grid
         justifyContent={"flex-start"}
         padding={"0px 100px"}

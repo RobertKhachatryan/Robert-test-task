@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // PAGES
 import { PostsPage } from "./pages/posts";
-import { PhotosPage } from "./pages/photos";
+import { AlbumsPage } from "./pages/albums";
 import { TodosPage } from "./pages/todos";
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<PostsPage />} />
         {/* <Route path="/" element={<div>aaaa</div>} /> */}
-        <Route path="photos" element={<PhotosPage />} />
+        <Route path="albums" element={<AlbumsPage />} />
         <Route path="todos" element={<TodosPage />} />
       </Routes>
     </BrowserRouter>

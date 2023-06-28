@@ -13,7 +13,7 @@ import * as S from "./header.styles";
 
 const pages = [
   { name: "Посты", path: "/" },
-  { name: "Фото", path: "/photos" },
+  { name: "Фото", path: "/albums" },
   { name: "Задачи", path: "/todos" },
 ];
 

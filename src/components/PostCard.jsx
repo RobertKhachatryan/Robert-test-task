@@ -15,8 +15,13 @@ import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ModeCommentIcon from "@mui/icons-material/ModeComment";
-import StarIcon from "@mui/icons-material/Star";
+// import StarIcon from "@mui/icons-material/Star";
 import { getCommentsById } from "../app/slices/commentsSlice";
+import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
+
 export const PostCard = ({ title, body, id, handleOpen }) => {
   // states
   const [inputToggle, setInputTogle] = useState(false);
@@ -70,7 +75,7 @@ export const PostCard = ({ title, body, id, handleOpen }) => {
         >
           <div>
             <IconButton
-              component={EditIcon}
+              component={ModeEditOutlinedIcon}
               color="primary"
               onClick={handleEdit}
               style={{ fontSize: "35px" }}
@@ -78,20 +83,20 @@ export const PostCard = ({ title, body, id, handleOpen }) => {
             <IconButton
               onClick={() => getComments()}
               style={{ fontSize: "35px" }}
-              component={ModeCommentIcon}
+              component={ModeCommentOutlinedIcon}
               color="primary"
             />
 
             <IconButton
               style={{ fontSize: "35px" }}
-              component={StarIcon}
+              component={FavoriteBorderOutlinedIcon}
               color="primary"
             />
           </div>
           <div>
             <IconButton
               style={{ fontSize: "35px" }}
-              component={DeleteIcon}
+              component={DeleteOutlineOutlinedIcon}
               color="error"
               onClick={() => {
                 //   handleDelete();
