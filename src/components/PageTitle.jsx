@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 
 export const PageTitle = ({ title }) => {
   return (
-    <Typography variant="h4" align="center" marginTop={5}>
+    <Typography variant="h4" align="center">
       {title}
     </Typography>
   );

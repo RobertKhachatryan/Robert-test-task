@@ -6,6 +6,7 @@ import { fetchTodos } from "../app/slices/todosSlice";
 import Stack from "@mui/material/Stack";
 import {
   Box,
+  Button,
   Checkbox,
   IconButton,
   ListItem,
@@ -100,12 +101,19 @@ export const TodosPage = () => {
             );
           })}
         </Stack>
-        <Pagination
-          count={10}
-          variant="outlined"
-          shape="rounded"
-          style={{ marginTop: "50px" }}
-        />
+        <Box
+          width={"100%"}
+          display={"flex"}
+          alignItems={"center"}
+          marginTop={"30px"}
+          justifyContent={"space-between"}
+        >
+          <Pagination count={10} variant="outlined" shape="rounded" />
+          <Box>
+            <Button>В избранное</Button>
+            <Button>Удалить</Button>
+          </Box>
+        </Box>
       </Box>
     </>
   );

@@ -18,13 +18,13 @@ const style = {
   p: 3,
 };
 
-export default function CustomModal({
+export const DeleteModal = ({
   open,
   handleClose,
   deleteModal,
   createCardModal,
   id,
-}) {
+}) => {
   const dispatch = useDispatch();
 
   const handleDelete = () => {
@@ -50,31 +50,17 @@ export default function CustomModal({
           Are you sure?
         </Typography>
 
-        {deleteModal && (
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "flex-end",
-            }}
-          >
-            <Button onClick={() => handleDelete()}>Ok</Button>
-            <Button onClick={() => handleClose()}>Cancel</Button>
-          </div>
-        )}
-        {createCardModal && (
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "flex-end",
-            }}
-          >
-            <Button onClick={() => handleDelete()}>Ok</Button>
-            <Button onClick={() => handleClose()}>Cancel</Button>
-          </div>
-        )}
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Button onClick={() => handleDelete()}>Ok</Button>
+          <Button onClick={() => handleClose()}>Cancel</Button>
+        </div>
       </Box>
     </Modal>
   );
-}
+};

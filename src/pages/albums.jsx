@@ -1,11 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Header } from "../layout/header";
 import { PageTitle } from "../components/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAlbums } from "../app/slices/albumsSlice";
-import { Box, ListItem, Pagination, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  ListItem,
+  Pagination,
+  Stack,
+  Typography,
+} from "@mui/material";
 import styled from "styled-components";
 import Checkbox from "@mui/material/Checkbox";
+import { DeleteModal } from "../components/DeleteModal";
 //icons
 import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -18,6 +26,9 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 
 export const AlbumsPage = () => {
   const dispatch = useDispatch();
+
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [postId, setPostId] = useState();
 
   const albumsData = useSelector((state) => state.albums.data);
   const getAlbums = async () => {
@@ -62,7 +73,7 @@ export const AlbumsPage = () => {
             return (
               <StyledListItem key={album?.id}>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <p>Name: </p>
+                  <Typography>Name: </Typography>
                   <Typography variant="h6">{album?.title}</Typography>
                 </div>
                 <div>
@@ -83,10 +94,10 @@ export const AlbumsPage = () => {
                     style={{ fontSize: "35px" }}
                     component={DeleteOutlineOutlinedIcon}
                     color="error"
-                    // onClick={() => {
-                    //   //   handleDelete();
-                    //   handleOpen(true);
-                    // }}
+                    onClick={() => {
+                      //   handleDelete();
+                      setOpenDeleteModal(true);
+                    }}
                   />
                   <Checkbox />
                 </div>
@@ -94,13 +105,25 @@ export const AlbumsPage = () => {
             );
           })}
         </Stack>
-        <Pagination
-          count={10}
-          variant="outlined"
-          shape="rounded"
-          style={{ marginTop: "30px" }}
-        />
+        <Box
+          width={"100%"}
+          display={"flex"}
+          alignItems={"center"}
+          marginTop={"30px"}
+          justifyContent={"space-between"}
+        >
+          <Pagination count={10} variant="outlined" shape="rounded" />
+          <Box>
+            <Button>В избранное</Button>
+            <Button>Удалить</Button>
+          </Box>
+        </Box>
       </Box>
+      <DeleteModal
+        open={openDeleteModal}
+        handleClose={() => setOpenDeleteModal(false)}
+        id={postId}
+      />
     </>
   );
 };

@@ -3,9 +3,9 @@ import { Header } from "../layout/header";
 import { PageTitle } from "../components/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../app/slices/postSlice";
-import { Button, Grid, IconButton, Pagination } from "@mui/material";
+import { Box, Button, Grid, IconButton, Pagination } from "@mui/material";
 import { PostCard } from "../components/PostCard";
-import CustomModal from "../components/modal";
+import { DeleteModal } from "../components/DeleteModal";
 import CreateCardModal from "../components/CreateCardModal";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -15,6 +15,7 @@ export const PostsPage = () => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [postId, setPostId] = useState();
+
   useEffect(() => {
     const posts = JSON.parse(localStorage.getItem("posts"));
     if (!posts || !posts.length) {
@@ -30,17 +31,22 @@ export const PostsPage = () => {
   return (
     <>
       <Header />
-      <PageTitle title="Posts" />
-      <Grid padding={"0px 100px"}>
+      <Box
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        marginTop={3}
+        marginBottom={4}
+      >
+        <PageTitle title="Posts" />
         <IconButton
           component={AddIcon}
           onClick={() => setOpenCreateModal(true)}
-          style={{ fontSize: "50px" }}
+          style={{ fontSize: "50px", marginLeft: "20px" }}
           color="primary"
-        >
-          +
-        </IconButton>
-      </Grid>
+        />
+      </Box>
+      <Grid padding={"0px 100px"}></Grid>
 
       <Grid
         justifyContent={"flex-start"}
@@ -62,24 +68,28 @@ export const PostsPage = () => {
             }}
           />
         ))}
-        <CustomModal
+        <DeleteModal
           open={openDeleteModal}
           handleClose={() => setOpenDeleteModal(false)}
-          deleteModal
           id={postId}
         />
         <CreateCardModal
           open={openCreateModal}
           handleClose={() => setOpenCreateModal(false)}
         />
-        <div style={{ width: "100%" }}>
-          <Pagination
-            count={10}
-            variant="outlined"
-            shape="rounded"
-            style={{ marginTop: "30px" }}
-          />
-        </div>
+        <Box
+          width={"100%"}
+          display={"flex"}
+          alignItems={"center"}
+          marginTop={"30px"}
+          justifyContent={"space-between"}
+        >
+          <Pagination count={10} variant="outlined" shape="rounded" />
+          <Box>
+            <Button>В избранное</Button>
+            <Button>Удалить</Button>
+          </Box>
+        </Box>
       </Grid>
     </>
   );
