@@ -17,6 +17,7 @@ import styled from "styled-components";
 import { TodoSwitch } from "../components/todoSwitch";
 //icons
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
+import AddIcon from "@mui/icons-material/Add";
 
 export const TodosPage = () => {
   const dispatch = useDispatch();
@@ -68,7 +69,21 @@ export const TodosPage = () => {
     <>
       <Header />
       <Box padding={"0px 100px"}>
-        <PageTitle title="Todos" />
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          marginTop={3}
+          marginBottom={4}
+        >
+          <PageTitle title="Posts" />
+          <IconButton
+            component={AddIcon}
+            // onClick={() => setOpenCreateModal(true)}
+            style={{ fontSize: "50px", marginLeft: "20px" }}
+            color="primary"
+          />
+        </Box>
         <Stack spacing={1}>
           {sortedTodos?.map((task) => {
             const status = task?.completed ? "Completed" : "Uncompleted";

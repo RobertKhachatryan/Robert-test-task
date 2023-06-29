@@ -4,6 +4,7 @@ import {
   Card,
   CardActions,
   CardContent,
+  Checkbox,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
@@ -23,6 +24,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
 import styled from "styled-components";
+import EditCardModal from "./EditCardModal";
 
 export const PostCard = ({
   title,
@@ -35,6 +37,8 @@ export const PostCard = ({
   // states
   const [inputToggle, setInputTogle] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [postId, setPostId] = useState();
   //   const [modalIsOpen, setModalIsOpen] = useState(false);
   const comments = useSelector((state) => state.comments.getCommentsById.data);
 
@@ -107,7 +111,7 @@ export const PostCard = ({
               <IconButton
                 component={ModeEditOutlinedIcon}
                 color="primary"
-                onClick={handleEdit}
+                onClick={() => setOpenEditModal()}
                 style={{ fontSize: "35px" }}
               />
               <IconButton
@@ -130,14 +134,18 @@ export const PostCard = ({
                 component={DeleteOutlineOutlinedIcon}
                 color="error"
                 onClick={() => {
-                  //   handleDelete();
                   handleOpen(true);
                 }}
               />
+              <Checkbox />
             </Box>
           </CardActions>
         </CardContent>
-
+        <EditCardModal
+          id={postId}
+          open={openEditModal}
+          handleClose={() => setOpenEditModal(false)}
+        />
         {inputToggle && (
           <>
             <input

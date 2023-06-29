@@ -21,21 +21,21 @@ const style = {
   p: 3,
 };
 
-export default function CreateCardModal({ open, onCreate, handleClose }) {
+export default function EditCardModal({ open, onEdit, handleClose }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
-  const handleCreate = () => {
-    onCreate({
-      id: new Date().getTime(),
-      body,
-      title,
-      userId: 10,
-    });
+  //   const handleCreate = () => {
+  //     onCreate({
+  //       id: new Date().getTime(),
+  //       body,
+  //       title,
+  //       userId: 10,
+  //     });
 
-    setTitle("");
-    setBody("");
-  };
+  //     setTitle("");
+  //     setBody("");
+  //   };
 
   const options = [
     { value: "option1", label: "Option 1" },
@@ -69,7 +69,7 @@ export default function CreateCardModal({ open, onCreate, handleClose }) {
           justifyContent={"flex-end"}
           marginTop={3}
         >
-          <Button onClick={() => handleCreate()}>Create</Button>
+          {/* <Button onClick={() => handleCreate()}>Create</Button> */}
           <Button onClick={() => handleClose()}>Cancel</Button>
         </Box>
       </Box>

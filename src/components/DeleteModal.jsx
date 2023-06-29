@@ -18,26 +18,7 @@ const style = {
   p: 3,
 };
 
-export const DeleteModal = ({
-  open,
-  handleClose,
-  deleteModal,
-  createCardModal,
-  id,
-}) => {
-  const dispatch = useDispatch();
-
-  const handleDelete = () => {
-    dispatch(
-      deletePost({
-        id,
-        onSuccess: () => {
-          handleClose();
-        },
-      })
-    );
-  };
-
+export const DeleteModal = ({ open, handleClose, onDelete, id }) => {
   return (
     <Modal
       open={open}
@@ -57,7 +38,7 @@ export const DeleteModal = ({
             justifyContent: "flex-end",
           }}
         >
-          <Button onClick={() => handleDelete()}>Ok</Button>
+          <Button onClick={() => onDelete(id)}>Ok</Button>
           <Button onClick={() => handleClose()}>Cancel</Button>
         </div>
       </Box>

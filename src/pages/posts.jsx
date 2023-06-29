@@ -1,35 +1,52 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "../layout/header";
 import { PageTitle } from "../components/PageTitle";
-import { useDispatch, useSelector } from "react-redux";
-import { getPosts } from "../app/slices/postSlice";
-import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
+import { Box, Grid, IconButton, Typography } from "@mui/material";
 import { PostCard } from "../components/PostCard";
 import { DeleteModal } from "../components/DeleteModal";
 import CreateCardModal from "../components/CreateCardModal";
 import AddIcon from "@mui/icons-material/Add";
 import { CustomPagination } from "../components/CustomPagination";
+import axios from "../axios";
+import { useStorageData } from "../app/hooks/storageData";
+import EditCardModal from "../components/EditCardModal";
 
 export const PostsPage = () => {
-  const dispatch = useDispatch();
-  const postsData = useSelector((state) => state.posts.getPosts.data);
+  const [posts, setPosts] = useState([]);
+  const [data, setData] = useState([]);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  // const [openEditModal, setOpenEditModal] = useState(false);
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [commentVisible, setCommentVisible] = useState(false);
 
   const comments = useSelector((state) => state.comments.getCommentsById.data);
   const [postId, setPostId] = useState();
-  console.log(comments);
+
+  const loadData = async ({ page, limit }) => {
+    const { data } = await axios.get(`/posts?_page=${page}&_limit=${limit}`);
+    setPosts(data);
+  };
+
+  const onCreate = (post) => {
+    setPosts(posts.concat(post));
+    setOpenCreateModal(false);
+  };
+  const onEdit = (newPost) => {
+    setData(
+      posts.map((post) => {
+        if (post.id === postId) return newPost;
+        return post;
+      })
+    );
+  };
+  const onDelete = (postId) => {
+    setPosts(posts.filter((item) => item.id !== postId));
+    setOpenDeleteModal(false);
+  };
+
   useEffect(() => {
-    const posts = JSON.parse(localStorage.getItem("posts"));
-    if (!posts || !posts.length) {
-      dispatch(
-        getPosts({
-          page: 1,
-          limit: 10,
-        })
-      );
-    }
+    loadData({ page: 1, limit: 10 });
   }, []);
 
   return (
@@ -60,7 +77,7 @@ export const PostsPage = () => {
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
-        {postsData?.map((item) => (
+        {posts?.map((item) => (
           <PostCard
             setCommentVisible={setCommentVisible}
             commentVisible={commentVisible}
@@ -74,27 +91,42 @@ export const PostsPage = () => {
             }}
           />
         ))}
-        {commentVisible &&
-          comments?.map((comment) => {
-            console.log(comment);
-            return (
-              <Box key={comment.id}>
-                <Typography>{comment?.name}</Typography>
-                <Typography>{comment?.email}</Typography>
-                <Typography>{comment?.body}</Typography>
-              </Box>
-            );
-          })}
+        <Box position={"absolute"}>
+          {commentVisible &&
+            comments?.map((comment) => {
+              console.log(comment);
+              return (
+                <Box
+                  key={comment.id}
+                  border={"1px solid #c5e9ff"}
+                  backgroundColor={"#daf1ff"}
+                  borderRadius={2}
+                  padding={1}
+                >
+                  <Typography>Name: {comment?.name}</Typography>
+                  <Typography>Email: {comment?.email}</Typography>
+                  <Typography>{comment?.body}</Typography>
+                </Box>
+              );
+            })}
+        </Box>
         <DeleteModal
           open={openDeleteModal}
           handleClose={() => setOpenDeleteModal(false)}
+          onDelete={onDelete}
           id={postId}
         />
+        {/* <EditCardModal
+          id={postId}
+          open={openEditModal}
+          handleClose={() => setOpenCreateModal(false)}
+        /> */}
         <CreateCardModal
           open={openCreateModal}
+          onCreate={onCreate}
           handleClose={() => setOpenCreateModal(false)}
         />
-        <CustomPagination page="posts" />
+        <CustomPagination loadData={loadData} />
       </Grid>
     </>
   );
