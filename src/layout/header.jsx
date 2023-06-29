@@ -21,7 +21,6 @@ export const Header = () => {
   //STATES
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  //   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   // FUNCTIONS
 
@@ -120,13 +119,7 @@ export const Header = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <S.HeaderItem
-                to={page.path}
-                key={page.name}
-
-                // onClick={handleCloseNavMenu}
-                // sx={{ my: 2, color: "white", display: "block" }}
-              >
+              <S.HeaderItem to={page.path} key={page.name}>
                 {page.name}
               </S.HeaderItem>
             ))}

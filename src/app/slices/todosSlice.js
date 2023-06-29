@@ -23,24 +23,7 @@ const initialState = {
 const todoSlice = createSlice({
   name: "todo",
   initialState,
-  // reducers: {
-  //   editPost: (state, action) => {
-  //     const savedCards = JSON.parse(localStorage.getItem("posts"));
-  //     const { id, value } = action.payload;
-  //     const index = savedCards.findIndex((item) => item.id === id);
-  //     if (index !== -1) {
-  //       savedCards[index].body = value;
-  //       window.localStorage.setItem("posts", JSON.stringify(savedCards));
-  //       state.data[index].body = savedCards[index].body;
-  //     }
-  //   },
-  //   deleteItem: (state, action) => {
-  //     const { id } = action.payload;
-  //     const newData = state.data.filter((item) => item.id !== id);
-  //     window.localStorage.setItem("posts", JSON.stringify(newData));
-  //     state.data = newData;
-  //   },
-  // },
+
   extraReducers: {
     [fetchTodos.pending]: (state) => {
       state.status = "loading";
@@ -58,5 +41,4 @@ const todoSlice = createSlice({
 });
 
 export const selectTodos = (state) => state.todo.data;
-// export const { editPost, deleteItem } = postSlice.actions;
 export const todosReducer = todoSlice.reducer;

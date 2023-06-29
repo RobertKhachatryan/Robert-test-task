@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-export const CreateCardModalUsersSelect = ({ options }) => {
+export const CreateCardModalUsersSelect = ({ options, selectUser }) => {
   const [user, setUser] = React.useState("");
 
   const handleChange = (event) => {
@@ -24,7 +24,11 @@ export const CreateCardModalUsersSelect = ({ options }) => {
           onChange={handleChange}
         >
           {options.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
+            <MenuItem
+              key={option.value}
+              value={option.value}
+              onClick={() => selectUser(option.label)}
+            >
               {option.label}
             </MenuItem>
           ))}

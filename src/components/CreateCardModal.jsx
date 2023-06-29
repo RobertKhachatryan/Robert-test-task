@@ -1,10 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { useDispatch } from "react-redux";
-import { createPost, deletePost } from "../app/slices/postSlice";
 import { Input } from "@mui/material";
 import { CreateCardModalUsersSelect } from "./CreateCardModalUsersSelect";
 import { useState } from "react";
@@ -21,9 +18,17 @@ const style = {
   p: 3,
 };
 
-export default function CreateCardModal({ open, onCreate, handleClose }) {
+export default function CreateCardModal({
+  open,
+  onCreate,
+  handleClose,
+  usersData,
+}) {
+  //states
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [userOptions, setUserOptions] = useState([]);
+  const [selectedUser, setSelectedUser] = useState();
 
   const handleCreate = () => {
     onCreate({
@@ -31,17 +36,29 @@ export default function CreateCardModal({ open, onCreate, handleClose }) {
       body,
       title,
       userId: 10,
+      userName: selectedUser ? selectedUser : "",
     });
 
     setTitle("");
     setBody("");
   };
 
-  const options = [
-    { value: "option1", label: "Option 1" },
-    { value: "option2", label: "Option 2" },
-    { value: "option3", label: "Option 3" },
-  ];
+  const selectUserCB = (user) => {
+    setSelectedUser(user);
+  };
+
+  React.useEffect(() => {
+    if (usersData) {
+      const usersMap = usersData.map((user) => {
+        return {
+          label: user.username,
+          value: user.id,
+        };
+      });
+      setUserOptions(usersMap);
+    }
+  }, [usersData]);
+
   return (
     <Modal
       open={open}
@@ -61,7 +78,10 @@ export default function CreateCardModal({ open, onCreate, handleClose }) {
             value={body}
             onChange={(e) => setBody(e.target.value)}
           />
-          <CreateCardModalUsersSelect options={options} />
+          <CreateCardModalUsersSelect
+            options={userOptions}
+            selectUser={selectUserCB}
+          />
         </Box>
         <Box
           width={"100%"}

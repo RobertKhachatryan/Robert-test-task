@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "../layout/header";
+import { useNavigate } from "react-router";
 import { PageTitle } from "../components/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAlbums } from "../app/slices/albumsSlice";
@@ -16,25 +17,20 @@ import Checkbox from "@mui/material/Checkbox";
 import { DeleteModal } from "../components/DeleteModal";
 //icons
 import { IconButton } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import ModeCommentIcon from "@mui/icons-material/ModeComment";
-// import StarIcon from "@mui/icons-material/Star";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import { useNavigate } from "react-router";
 
 export const AlbumsPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  //states
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [postId, setPostId] = useState();
 
   const albumsData = useSelector((state) => state.albums.data);
   const getAlbums = async () => {
     const albums = JSON.parse(localStorage.getItem("albums"));
-    console.log(albums, "sssss");
     if (!albums || !albums.length) {
       const data = await dispatch(
         fetchAlbums({
@@ -67,7 +63,15 @@ export const AlbumsPage = () => {
   return (
     <>
       <Header />
-      <PageTitle title="Albums" />
+      <Box
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        marginTop={3}
+        marginBottom={4}
+      >
+        <PageTitle title="Альбомы" />
+      </Box>
       <Box padding={"0px 100px"}>
         <Stack spacing={1}>
           {albumsData?.map((album) => {
@@ -86,7 +90,6 @@ export const AlbumsPage = () => {
                   <IconButton
                     component={ModeEditOutlinedIcon}
                     color="primary"
-                    // onClick={handleEdit}
                     style={{ fontSize: "35px" }}
                   />
 
@@ -101,7 +104,6 @@ export const AlbumsPage = () => {
                     component={DeleteOutlineOutlinedIcon}
                     color="error"
                     onClick={() => {
-                      //   handleDelete();
                       setOpenDeleteModal(true);
                     }}
                   />

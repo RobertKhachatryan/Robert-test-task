@@ -11,7 +11,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<PostsPage />} />
-        {/* <Route path="/" element={<div>aaaa</div>} /> */}
         <Route path="albums" element={<AlbumsPage />} />
         <Route path="todos" element={<TodosPage />} />
         <Route path="photos/:albumId" element={<PhotosPage />} />

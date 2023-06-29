@@ -1,14 +1,6 @@
 import axios from "../../axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const initialState = {
-  getPhotos: {
-    loading: false,
-    data: [],
-    error: null,
-  },
-};
-
 export const getPhotos = createAsyncThunk(
   "getPhotosAction",
   async ({ albumId, page, limit }) => {
@@ -18,6 +10,15 @@ export const getPhotos = createAsyncThunk(
     return data;
   }
 );
+
+const initialState = {
+  getPhotos: {
+    loading: false,
+    data: [],
+    error: null,
+  },
+};
+
 export const photosSlice = createSlice({
   name: "photos",
   initialState,
@@ -41,5 +42,4 @@ export const photosSlice = createSlice({
   },
 });
 
-// export const selectPosts = (state) => state.post.data;
 export const photosReducer = photosSlice.reducer;

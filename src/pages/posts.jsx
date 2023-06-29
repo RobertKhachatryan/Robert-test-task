@@ -9,22 +9,22 @@ import CreateCardModal from "../components/CreateCardModal";
 import AddIcon from "@mui/icons-material/Add";
 import { CustomPagination } from "../components/CustomPagination";
 import axios from "../axios";
-import { useStorageData } from "../app/hooks/storageData";
-import EditCardModal from "../components/EditCardModal";
 
 export const PostsPage = () => {
+  //states
   const [posts, setPosts] = useState([]);
   const [data, setData] = useState([]);
+  const [usersData, setUsersData] = useState([]);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  // const [openEditModal, setOpenEditModal] = useState(false);
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [commentVisible, setCommentVisible] = useState(false);
 
   const comments = useSelector((state) => state.comments.getCommentsById.data);
   const [postId, setPostId] = useState();
-
   const loadData = async ({ page, limit }) => {
     const { data } = await axios.get(`/posts?_page=${page}&_limit=${limit}`);
+    const usersData = await axios.get(`/users`);
+    setUsersData(usersData.data);
     setPosts(data);
   };
 
@@ -49,6 +49,13 @@ export const PostsPage = () => {
     loadData({ page: 1, limit: 10 });
   }, []);
 
+  const getUser = (id) => {
+    if (!usersData) {
+      return;
+    }
+    return usersData.find((item) => item.id === id);
+  };
+
   return (
     <>
       <Header />
@@ -59,7 +66,7 @@ export const PostsPage = () => {
         marginTop={3}
         marginBottom={4}
       >
-        <PageTitle title="Posts" />
+        <PageTitle title="Посты" />
         <IconButton
           component={AddIcon}
           onClick={() => setOpenCreateModal(true)}
@@ -85,6 +92,7 @@ export const PostsPage = () => {
             key={item.id * Math.random()}
             title={item.title}
             body={item.body}
+            user={item?.userName || getUser(item.userId).username}
             handleOpen={() => {
               setOpenDeleteModal(true);
               setPostId(item.id);
@@ -94,7 +102,6 @@ export const PostsPage = () => {
         <Box position={"absolute"}>
           {commentVisible &&
             comments?.map((comment) => {
-              console.log(comment);
               return (
                 <Box
                   key={comment.id}
@@ -116,12 +123,9 @@ export const PostsPage = () => {
           onDelete={onDelete}
           id={postId}
         />
-        {/* <EditCardModal
-          id={postId}
-          open={openEditModal}
-          handleClose={() => setOpenCreateModal(false)}
-        /> */}
+
         <CreateCardModal
+          usersData={usersData}
           open={openCreateModal}
           onCreate={onCreate}
           handleClose={() => setOpenCreateModal(false)}

@@ -1,13 +1,9 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { useDispatch } from "react-redux";
-import { createPost, deletePost } from "../app/slices/postSlice";
 import { Input } from "@mui/material";
 import { CreateCardModalUsersSelect } from "./CreateCardModalUsersSelect";
-import { useState } from "react";
 
 const style = {
   position: "absolute",
@@ -25,23 +21,6 @@ export default function EditCardModal({ open, onEdit, handleClose }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
-  //   const handleCreate = () => {
-  //     onCreate({
-  //       id: new Date().getTime(),
-  //       body,
-  //       title,
-  //       userId: 10,
-  //     });
-
-  //     setTitle("");
-  //     setBody("");
-  //   };
-
-  const options = [
-    { value: "option1", label: "Option 1" },
-    { value: "option2", label: "Option 2" },
-    { value: "option3", label: "Option 3" },
-  ];
   return (
     <Modal
       open={open}
@@ -61,7 +40,7 @@ export default function EditCardModal({ open, onEdit, handleClose }) {
             value={body}
             onChange={(e) => setBody(e.target.value)}
           />
-          <CreateCardModalUsersSelect options={options} />
+          <CreateCardModalUsersSelect />
         </Box>
         <Box
           width={"100%"}
@@ -69,7 +48,6 @@ export default function EditCardModal({ open, onEdit, handleClose }) {
           justifyContent={"flex-end"}
           marginTop={3}
         >
-          {/* <Button onClick={() => handleCreate()}>Create</Button> */}
           <Button onClick={() => handleClose()}>Cancel</Button>
         </Box>
       </Box>

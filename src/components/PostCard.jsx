@@ -1,23 +1,17 @@
+import React, { useState } from "react";
 import {
   Box,
-  Button,
   Card,
   CardActions,
   CardContent,
   Checkbox,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { deletePost, editPost } from "../app/slices/postSlice";
+import { useDispatch } from "react-redux";
 
 // icons
 
 import { IconButton } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import ModeCommentIcon from "@mui/icons-material/ModeComment";
-// import StarIcon from "@mui/icons-material/Star";
 import { getCommentsById } from "../app/slices/commentsSlice";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
@@ -29,24 +23,18 @@ import EditCardModal from "./EditCardModal";
 export const PostCard = ({
   title,
   body,
+  user,
   id,
   handleOpen,
   setCommentVisible,
   commentVisible,
 }) => {
   // states
-  const [inputToggle, setInputTogle] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [openEditModal, setOpenEditModal] = useState(false);
   const [postId, setPostId] = useState();
-  //   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const comments = useSelector((state) => state.comments.getCommentsById.data);
 
   const dispatch = useDispatch();
-
-  const handleEdit = () => {
-    setInputTogle(!inputToggle);
-  };
 
   const getComments = () => {
     setCommentVisible(!commentVisible);
@@ -55,23 +43,12 @@ export const PostCard = ({
         id,
       })
     );
-    console.log(id);
   };
 
   const handleSave = () => {
     if (!inputValue) {
       return;
     }
-    dispatch(
-      editPost({
-        id: id,
-        payload: {
-          body: inputValue,
-          //   userId
-          // title
-        },
-      })
-    );
   };
 
   const StyledCard = styled(Card)`
@@ -99,6 +76,9 @@ export const PostCard = ({
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {body}
+            </Typography>
+            <Typography variant="h6" color="text.secondary">
+              {user}
             </Typography>
           </Box>
           <CardActions
@@ -146,16 +126,6 @@ export const PostCard = ({
           open={openEditModal}
           handleClose={() => setOpenEditModal(false)}
         />
-        {inputToggle && (
-          <>
-            <input
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              type="text"
-            />
-            <button onClick={handleSave}>Save</button>
-          </>
-        )}
       </StyledCard>
     </>
   );

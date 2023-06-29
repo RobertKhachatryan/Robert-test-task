@@ -1,16 +1,10 @@
 import axios from "../../axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchUsers = createAsyncThunk(
-  "user/fetchUsers",
-  async (params) => {
-    const { data } = await axios.get(
-      "/users"
-      // params
-    );
-    return data;
-  }
-);
+export const fetchUsers = createAsyncThunk("user/fetchUsers", async () => {
+  const { data } = await axios.get("/users");
+  return data;
+});
 
 const savedUsers = localStorage.getItem("users");
 const initialUsers = savedUsers ? JSON.parse(savedUsers) : null;
@@ -23,10 +17,7 @@ const initialState = {
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {
-    // editPost: (state, action) => {},
-    // deleteItem: (state, action) => {},
-  },
+  reducers: {},
   extraReducers: {
     [fetchUsers.pending]: (state) => {
       state.status = "loading";
@@ -44,5 +35,4 @@ const userSlice = createSlice({
 });
 
 export const selectUsers = (state) => state.user.data;
-// export const { editPost, deleteItem } = postSlice.actions;
 export const usersReducer = userSlice.reducer;

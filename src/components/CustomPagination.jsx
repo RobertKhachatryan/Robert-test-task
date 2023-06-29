@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Pagination,
   Box,
@@ -7,42 +8,10 @@ import {
   InputLabel,
   FormControl,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router";
-import { getPosts } from "../app/slices/postSlice";
-import { getPhotos } from "../app/slices/photosSlice";
-import { fetchAlbums } from "../app/slices/albumsSlice";
-import { fetchTodos } from "../app/slices/todosSlice";
 
 export const CustomPagination = ({ loadData }) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const searchParams = new URLSearchParams(location.search);
-  // const pageCount = searchParams.get("page");
-  // const limit = searchParams.get("limit");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const paginationCount = searchParams.get("count");
-
-  const [count, setCount] = useState(paginationCount || 0);
-  // useEffect(() => {
-  //   switch (page) {
-  //     case "albums":
-  //       dispatch(fetchAlbums({ page: pageCount || 1, limit: limit || 10 }));
-  //       break;
-
-  //     case "photos":
-  //       dispatch(
-  //         getPhotos({ albumId, page: pageCount || 1, limit: limit || 10 })
-  //       );
-  //       break;
-  //     case "todos":
-  //       dispatch(fetchTodos({ page: pageCount || 1, limit: limit || 10 }));
-  //       break;
-  //   }
-  // }, [location]);
 
   const changePage = (pageNumber) => {
     setPage(pageNumber);
@@ -51,9 +20,6 @@ export const CustomPagination = ({ loadData }) => {
       limit: limit,
       page: pageNumber,
     });
-
-    // location.search = `?page=${pageNumber}&limit=${limit}&count=${p}`;
-    // navigate(location);
   };
 
   const changePageSize = (e) => {

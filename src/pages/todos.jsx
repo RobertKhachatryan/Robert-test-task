@@ -76,10 +76,9 @@ export const TodosPage = () => {
           marginTop={3}
           marginBottom={4}
         >
-          <PageTitle title="Posts" />
+          <PageTitle title="Задачи" />
           <IconButton
             component={AddIcon}
-            // onClick={() => setOpenCreateModal(true)}
             style={{ fontSize: "50px", marginLeft: "20px" }}
             color="primary"
           />
@@ -104,7 +103,6 @@ export const TodosPage = () => {
                   <IconButton
                     component={ModeEditOutlinedIcon}
                     color="primary"
-                    // onClick={handleEdit}
                     style={{ fontSize: "35px" }}
                   />
 
